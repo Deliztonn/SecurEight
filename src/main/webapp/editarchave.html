@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Editar Chave de Acesso</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="editarchave.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      
+      <!-- BOTÃO DE VOLTAR -->
+      <button class="back-btn" onclick="window.history.back()">
+        ⬅ Voltar
+      </button>
+
+      <!-- LOGO -->
+      <div class="logo">
+        <img src="Images/logo.png" alt="Logo do condomínio" />
+      </div>
+
+      <!-- TÍTULO -->
+      <h1>Editar Chave de Acesso</h1>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="left-panel">
+      <div class="left-content">
+        <button class="big-btn">Duplicar</button>
+        <button class="big-btn">Bloquear</button>
+        <button class="big-btn">Excluir</button>
+      </div>
+    </div>
+
+    <div class="right-panel">
+      <div class="search-card">
+        <img class="search-icon" src="https://cdn-icons-png.flaticon.com/512/622/622669.png" alt="Pesquisar" />
+        <input id="searchInput" type="text" placeholder="Pesquisar..." />
+      </div>
+
+      <div class="table-card">
+        <table class="grid-table" id="accessTable">
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Apartamento</th>
+              <th>Verificação</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Lucas Araújo</td>
+              <td>Bloco 4 Ap 69</td>
+              <td class="center-cell"><input type="radio" name="verif-1" /></td>
+            </tr>
+            <tr><td>&nbsp;</td><td></td><td></td></tr>
+            <tr><td>&nbsp;</td><td></td><td></td></tr>
+            <tr><td>&nbsp;</td><td></td><td></td></tr>
+            <tr><td>&nbsp;</td><td></td><td></td></tr>
+            <tr><td>&nbsp;</td><td></td><td></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const input = document.getElementById('searchInput');
+    input.addEventListener('input', function () {
+      const q = this.value.toLowerCase().trim();
+      const rows = document.querySelectorAll('#accessTable tbody tr');
+      rows.forEach(row => {
+        const tds = Array.from(row.querySelectorAll('td')).map(td => td.textContent.toLowerCase());
+        const isEmptyRow = tds.every(t => t.trim() === '');
+        row.style.display = isEmptyRow || tds.join(' ').includes(q) ? '' : 'none';
+      });
+    });
+  </script>
+</body>
+</html>
