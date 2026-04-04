@@ -19,27 +19,45 @@
   </properties>
 
   <dependencies>
-    <!-- Dependência para criar Servlets e JSPs (Já estava correta ) -->
+    <!-- 
+    1. DEPENDÊNCIA DO SERVLET API (CORREÇÃO DE VERSÃO)
+    Atualizado para 6.0.0 para compatibilidade total com Tomcat 11 e Jakarta EE.
+    O escopo 'provided' está correto, pois o Tomcat fornece esta API.
+    -->
     <dependency>
       <groupId>jakarta.servlet</groupId>
       <artifactId>jakarta.servlet-api</artifactId>
-      <version>5.0.0</version>
+      <version>6.0.0</version>
       <scope>provided</scope>
     </dependency>
 
-    <!-- =============================================================== -->
-    <!-- INÍCIO DA ADIÇÃO: Dependência para conectar com o MySQL          -->
-    <!-- =============================================================== -->
+    <!-- 
+    2. DEPENDÊNCIAS JSTL (CORREÇÃO DE ERRO NO JSP)
+    Adicionadas para resolver o erro de Taglib e permitir o uso de <c:forEach> no JSP.
+    -->
+    <dependency>
+        <groupId>jakarta.servlet.jsp.jstl</groupId>
+        <artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
+        <version>3.0.0</version>
+    </dependency>
+    <dependency>
+        <groupId>org.glassfish.web</groupId>
+        <artifactId>jakarta.servlet.jsp.jstl</artifactId>
+        <version>3.0.1</version>
+    </dependency>
+
+    <!-- 
+    3. DEPENDÊNCIA DO DRIVER MYSQL (CORREÇÃO DE NoClassDefFoundError)
+    Mantida, mas garantindo que o escopo padrão (compile) seja usado para que o JAR
+    seja incluído no WEB-INF/lib do WAR, resolvendo o erro do driver.
+    -->
     <dependency>
       <groupId>com.mysql</groupId>
       <artifactId>mysql-connector-j</artifactId>
       <version>8.0.33</version>
     </dependency>
-    <!-- =============================================================== -->
-    <!-- FIM DA ADIÇÃO                                                   -->
-    <!-- =============================================================== -->
 
-    <!-- Dependências para Testes com JUnit 5 (Já estavam corretas) -->
+    <!-- Dependências para Testes com JUnit 5 (Mantidas) -->
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-api</artifactId>

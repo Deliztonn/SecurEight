@@ -71,11 +71,11 @@
   <div style="background-color:#3B5ABE; color:white; padding:15px;">
     <p style="font-size:40px; margin-left:150px; margin-top:10px;">SecurEight</p>
 
-    <img src="Images/logo.png"
+    <img src="images/logo.png"
          style="width:180px; height:130px; position:absolute; top:-13px; left:0px;">
 
-    <img src="Images/FundoLogin.png"
-         style="width:101%; height:85%; position:absolute; top:115px; left:-3px;">
+    <img src="images/aviso01.jpeg"
+         style="width:100%; height:90%; position:absolute; top:115px; left:0px;">
   </div>
 
   <div class="position-relative">

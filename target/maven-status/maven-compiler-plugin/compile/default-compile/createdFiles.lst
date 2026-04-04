@@ -1,8 +1,14 @@
+com\schutele\Serverlet\ServletLogout.class
 com\schutele\DAO\ConnectionFactory.class
+com\schutele\Serverlet\ServletAvisos.class
 com\schutele\DAO\CadastrarDAO.class
-com\schutele\DAO\UsuarioDAO.class
 com\schutele\Serverlet\ServletCadastrar.class
+com\schutele\DAO\AvisoDAO.class
 com\schutele\DAO\TipoUsuarioDAO.class
+com\schutele\filters\FuncionarioFilter.class
+com\schutele\Serverlet\HistoricoServlet.class
+com\schutele\filters\AuthFilter.class
+com\schutele\DAO\UsuarioDAO.class
+com\schutele\Serverlet\ServletLogin.class
 com\schutele\model\Usuario.class
 com\schutele\DAO\CadastrarAtributos.class
-com\schutele\Serverlet\LoginServlet.class
