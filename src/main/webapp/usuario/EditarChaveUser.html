@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Chave de Acesso</title>
+
+  <!-- Fonte e CSS -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="EditarChaveUser.css" />
+</head>
+<body>
+  <!-- TOPO -->
+  <header class="topbar">
+    <div class="topbar-inner">
+       <div class="logo">
+       <a href="MenuUser.jsp">     
+        <img src="../images/logo.png"     
+        alt="Logo"/>
+        </a>
+      </div>
+
+      <h1>Chave de Acesso</h1>
+   </div>
+  </header>
+
+  <!-- CONTEÚDO PRINCIPAL -->
+  <main class="page">
+    <!-- PAINEL ESQUERDO -->
+    <div class="left-panel">
+      <div class="left-content">
+        <button class="big-btn" onclick="confirmarAcao('nova')">
+          Requisitar nova chave
+        </button>
+
+        <button class="big-btn" onclick="confirmarAcao('excluir')">
+          Requisitar exclusão de chave
+        </button>
+      </div>
+    </div>
+
+    <!-- PAINEL DIREITO -->
+    <div class="right-panel">
+      <div class="user-info-box">
+        <h2>Informações do Usuário</h2>
+        <table class="info-table">
+          <tr>
+            <th>Nome de Usuário:</th>
+            <td>Gabriel Henrique da Silva</td>
+          </tr>
+          <tr>
+            <th>E-mail:</th>
+            <td>gabriel.silva@example.com</td>
+          </tr>
+          <tr>
+            <th>Código de Usuário:</th>
+            <td>94751</td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- BLOCO DE MENSAGEM -->
+      <div id="mensagem-box" class="mensagem-box" style="display: none;">
+        <p id="mensagem"></p>
+      </div>
+    </div>
+  </main>
+
+  <!-- SCRIPT -->
+  <script>
+    async function confirmarAcao(tipo) {
+      const confirmar = confirm("Você realmente deseja realizar essa ação?");
+      if (!confirmar) {
+        mostrarMensagem("❌ Ação cancelada.", "cancelada");
+        return;
+      }
+
+      // Mostra mensagem de carregamento
+      mostrarMensagem("📤 Enviando solicitação ao servidor...", "processando");
+
+      try {
+        // Requisição ao back-end Java (Spring Boot, Jakarta EE etc.)
+        const resposta = await fetch(`/api/requisicoes/${tipo}`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            usuarioId: 94751,
+            nome: "Gabriel Henrique da Silva",
+            email: "gabriel.silva@example.com"
+          }),
+        });
+
+        // Converte a resposta do Java em JSON
+        const data = await resposta.json();
+
+        // Exemplo de resposta esperada do back-end:
+        // { "status": "aceita", "mensagem": "Requisição concluída com sucesso" }
+
+        if (resposta.ok && data.status === "aceita") {
+          mostrarMensagem("✅ Sua requisição foi concluída com sucesso!", "sucesso");
+        } else if (resposta.ok && data.status === "pendente") {
+          mostrarMensagem("⏳ Sua solicitação foi enviada e está aguardando análise do administrador.", "enviada");
+        } else {
+          mostrarMensagem("⚠️ Ocorreu um erro ao processar sua solicitação.", "erro");
+        }
+      } catch (erro) {
+        // Caso o servidor Java não esteja respondendo
+        mostrarMensagem("❌ Falha na comunicação com o servidor.", "erro");
+        console.error("Erro na requisição:", erro);
+      }
+    }
+
+    // Função para exibir mensagens no bloquinho
+    function mostrarMensagem(texto, tipo) {
+      const box = document.getElementById("mensagem-box");
+      const msg = document.getElementById("mensagem");
+
+      msg.textContent = texto;
+      box.style.display = "block";
+      box.className = "mensagem-box " + tipo;
+    }
+  </script>
+</body>
+</html>

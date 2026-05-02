@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Leitor QR Code</title>
+
+  <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+
+  <style>
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: url("images/aviso02.jpg");
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: #ffffff;
+    }
+
+    .container {
+      background: #7a8db2;
+      padding: 32px;
+      border-radius: 16px;
+      width: 90%;
+      max-width: 430px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+      text-align: center;
+      border: 1px solid #ffffff;
+    }
+
+    #result {
+      margin-top: 20px;
+      font-size: 16px;
+      background: #e2ecff;
+      color: #0f2c5c;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid #b9cbff;
+      display: none;
+      white-space: pre-line;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <h1>Leitor de QR Code</h1>
+    <div id="reader"></div>
+    <div id="result"></div>
+  </div>
+
+  <script>
+    async function onScanSuccess(decodedText) {
+      let dados;
+
+      try {
+        dados = JSON.parse(decodedText);
+      } catch {
+        mostrarResultado("QR inválido");
+        return;
+      }
+
+      const matricula = dados.MatriculaAluno;
+      if (!matricula) {
+        mostrarResultado("Campo MatriculaAluno ausente no QR");
+        return;
+      }
+
+      // ==========================================
+      //   1) VERIFICAR SE A CHAVE ESTÁ BLOQUEADA
+      // ==========================================
+      try {
+        const respStatus = await fetch(`http://localhost:3000/chave-status?matricula=${matricula}`);
+        const status = await respStatus.json();
+
+        if (status.bloqueado) {
+          mostrarResultado("Esta chave está bloqueado. Acesso negado.");
+          return;
+        }
+
+      } catch {
+        mostrarResultado("Erro ao verificar status da chave.");
+        return;
+      }
+
+      // ==========================================
+      //   2) CONSULTAR USUÁRIO
+      // ==========================================
+      let aluno;
+
+      try {
+        const resp = await fetch(`http://localhost:3000/aluno?matricula=${matricula}`);
+
+        if (!resp.ok) throw new Error();
+
+        aluno = await resp.json();
+
+      } catch {
+        mostrarResultado("Erro ao buscar aluno.");
+        return;
+      }
+
+      const agora = new Date();
+      const horaFormatada = agora.toLocaleString("pt-BR", { hour12: false });
+      const dataParaDB = agora.toISOString().slice(0, 19).replace("T", " ");
+
+      mostrarResultado(
+        `Nome: ${aluno.nome}\nMatrícula: ${aluno.matricula}\nData/Hora: ${horaFormatada}`
+      );
+
+      // ==========================================
+      //   3) REGISTRAR LEITURA
+      // ==========================================
+      fetch("http://localhost:3000/registros", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          nome: aluno.nome,
+          matricula: aluno.matricula,
+          data_leitura: dataParaDB
+        }),
+      });
+    }
+
+    function mostrarResultado(texto) {
+      const resultDiv = document.getElementById("result");
+      resultDiv.innerText = texto;
+      resultDiv.style.display = "block";
+    }
+
+    function onScanFailure(error) {
+      console.warn("Erro ao escanear:", error);
+    }
+
+    new Html5QrcodeScanner(
+      "reader",
+      { fps: 1, qrbox: { width: 250, height: 250 } },
+      false
+    ).render(onScanSuccess, onScanFailure);
+  </script>
+
+</body>
+</html>

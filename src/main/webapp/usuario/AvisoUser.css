@@ -1,0 +1,55 @@
+/* --- fundo --- */
+body {
+    font-family: Arial, sans-serif;
+    background: url('../images/WhatsApp Image 2025-11-25 at 21.18.38.jpeg') no-repeat center center fixed;
+    background-size: cover;
+    margin: 0;
+    padding: 40px;
+}
+
+/* --- container principal --- */
+.container {
+    max-width: 900px;
+    margin: auto;
+    background: rgba(255, 255, 255, 0.92);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+}
+
+h1 {
+    margin-top: 0;
+    text-align: center;
+}
+
+/* --- caixa de avisos --- */
+.avisos-box {
+    position: relative;  /* permite posicionar a logo */
+    margin-top: 20px;
+    background: white;
+    padding: 20px;
+    padding-top: 60px; /* espaço para a logo */
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.avisos-box h2 {
+    margin-top: 0;
+}
+
+/* 🔵 LOGO NO CANTO ESQUERDO */
+.logo {
+    width: 70px;
+    position: absolute;
+    top: 15px;
+    left: 15px;
+}
+
+/* --- estilo dos avisos --- */
+.aviso-item {
+    border-left: 5px solid #0d6efd;
+    padding: 10px 12px;
+    margin-bottom: 12px;
+    background: #f8f9fa;
+    border-radius: 5px;
+}

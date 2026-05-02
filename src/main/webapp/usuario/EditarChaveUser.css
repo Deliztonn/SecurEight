@@ -1,0 +1,236 @@
+:root {
+  --blue: #5c7aff;
+  --table-gray: #ddd;
+  font-size: 16px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+  font-family: "Inter", sans-serif;
+  background-image: url('../images/images.jpeg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+/* ==== TOPO ==== */
+.topbar {
+  background: var(--blue);
+  color: #fff;
+  padding: 18px 0;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+  width: 100%;
+}
+
+.topbar-inner {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding-left: 18px;
+}
+
+.back-btn {
+  background: #fff;
+  color: var(--blue);
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.back-btn:hover {
+  background: rgba(255, 255, 255, 0.9);
+  transform: scale(1.04);
+}
+
+.topbar img {
+  height: 100px;
+  width: auto;
+  object-fit: contain;
+}
+
+.topbar h1 {
+  font-size: 26px;
+  font-weight: 600;
+}
+
+/* ==== CONTEÚDO PRINCIPAL ==== */
+.page {
+  display: flex;
+  gap: 30px;
+  max-width: 1200px;
+  margin: 28px auto;
+  padding: 20px;
+  min-height: 68vh;
+  width: 90%;
+  border-radius: 10px;
+}
+
+.left-panel {
+  width: 34%;
+  min-width: 260px;
+  padding: 30px 20px;
+  display: flex;
+}
+
+.left-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  padding-left: 10px;
+}
+
+.big-btn {
+  width: 85%;
+  max-width: 320px;
+  padding: 20px;
+  border-radius: 18px;
+  border: none;
+  background: #fff;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+  font-weight: 700;
+  font-size: 20px;
+  cursor: pointer;
+  transition: 0.14s;
+}
+
+.big-btn:hover {
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2);
+}
+
+.right-panel {
+  width: 58%;
+  padding: 22px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 8px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+}
+
+/* ==== INFORMAÇÕES DO USUÁRIO ==== */
+.user-info-box {
+  width: 100%;
+  padding: 24px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+.user-info-box h2 {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--blue);
+  margin-bottom: 18px;
+  text-align: center;
+}
+
+.info-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.info-table th,
+.info-table td {
+  text-align: justify;
+  padding: 10px 15px;
+  font-size: 17px;
+  border-bottom: 1px solid #eee;
+}
+
+.info-table th {
+  width: 40%;
+  color: #444;
+  font-weight: 600;
+}
+
+.info-table td {
+  color: #222;
+  font-weight: 500;
+}
+
+/* ==== BLOCO DE MENSAGEM ==== */
+.mensagem-box {
+  margin-top: 25px;
+  padding: 18px 20px;
+  background: #f4f7ff;
+  border-left: 6px solid var(--blue);
+  border-radius: 10px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+  text-align: justify;
+  animation: fadeIn 0.4s ease;
+  transition: background 0.3s ease;
+}
+
+.mensagem-box p {
+  color: #1e3fa1;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+/* Cores diferentes para status */
+.mensagem-box.sucesso {
+  background: #e5ffea;
+  border-left-color: #2ecc71;
+  color: #206b3c;
+}
+
+.mensagem-box.erro {
+  background: #ffe9e9;
+  border-left-color: #e74c3c;
+}
+
+.mensagem-box.cancelada {
+  background: #fef5e5;
+  border-left-color: #f1c40f;
+}
+
+.mensagem-box.processando {
+  background: #eef2ff;
+  border-left-color: #5c7aff;
+}
+
+.mensagem-box.enviada {
+  background: #eaf0ff;
+  border-left-color: #5c7aff;
+}
+
+/* ==== ANIMAÇÃO ==== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ==== RESPONSIVIDADE ==== */
+@media (max-width: 1000px) {
+  .page {
+    flex-direction: column;
+    gap: 18px;
+    padding: 16px;
+  }
+
+  .left-panel,
+  .right-panel {
+    width: 100%;
+  }
+
+  .big-btn {
+    width: 70%;
+  }
+}
